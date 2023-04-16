@@ -1,0 +1,32 @@
+{
+  "name": "reddit-clone",
+  "version": "1.0.0",
+  "description": "This is a Full stack clone of \"Reddit\" built with Express, NodeJS, PostgreSQL and HTML. With a support of  JWT authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emanalabsi/Reddit-Clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emanalabsi/Reddit-Clone/issues"
+  },
+  "homepage": "https://github.com/Emanalabsi/Reddit-Clone#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "joi": "^17.9.1",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.10.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.6",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
