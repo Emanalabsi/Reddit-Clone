@@ -16,7 +16,6 @@ CREATE TABLE posts (
   title VARCHAR(255) NOT NULL, 
   description TEXT,
   media TEXT,
-  votes_count INT DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -32,13 +31,11 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE votes (
-  id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   post_id INT NOT NULL,
-  vote INT NOT NULL CHECK (vote IN (-1, 1)),
+  vote BOOLEAN NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (user_id,post_id)
 );
 
 CREATE INDEX idx_users_username ON users(username);

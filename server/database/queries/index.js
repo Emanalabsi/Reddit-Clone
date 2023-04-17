@@ -1,4 +1,16 @@
-const { addPost, deletePost, getPosts } = require("./posts");
+const {
+  addPostQuery,
+  deletePostQuery,
+  getِUserPostsQuery,
+  getAllPostsQuery,
+} = require("./posts");
 const { loginQuery, signupQuery } = require("./users");
 
-module.exports = { addPost, deletePost, getPosts, loginQuery, signupQuery };
+module.exports = {
+  addPostQuery,
+  deletePostQuery,
+  getِUserPostsQuery,
+  getAllPostsQuery,
+  loginQuery,
+  signupQuery,
+};

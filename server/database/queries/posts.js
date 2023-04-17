@@ -1,6 +1,6 @@
 const connection = require("../config");
 
-const addPost = (postData) => {
+const addPostQuery = (postData) => {
   const { title, description, media, user_id } = postData;
   const sql = {
     text: `insert into posts (title, description, media, user_id) values ($1,$2,$3,$4) returning user_id;`,
@@ -8,7 +8,7 @@ const addPost = (postData) => {
   };
   return connection.query(sql);
 };
-const deletePost = (postId) => {
+const deletePostQuery = (postId) => {
   const sql = {
     text: `delete * from posts where post_id = $1;`,
     value: [postId],
@@ -16,12 +16,13 @@ const deletePost = (postId) => {
   return connection.query(sql);
 };
 
-const getPosts = (userId) => {
-  const sql = {
-    text: `select * from posts where user_ id = $1;`,
-    value: [userId],
-  };
-  return connection.query(sql);
-};
+const getِUserPostsQuery = () => {};
 
-module.exports = { addPost, deletePost, getPosts };
+const getAllPostsQuery = () => {};
+
+module.exports = {
+  addPostQuery,
+  deletePostQuery,
+  getِUserPostsQuery,
+  getAllPostsQuery,
+};
