@@ -1,15 +1,30 @@
 const Joi = require("joi");
 
-const loginSchema = Joi.object({
-  username: Joi.string().min(3).max(20).required(),
-  password: Joi.string().required(),
+const signupSchema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string()
+    .pattern(
+      new RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:'\\\",.<>\\/?]).{8,}$"
+      )
+    )
+    .required(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
 });
 
-const signupSchema = Joi.object({
-  username: Joi.min(3).max(30).required(),
-  password: Joi.string().required(),
-  email: Joi.email().required(),
-  img_url: Joi.string().required(),
+const loginSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string()
+    .pattern(
+      new RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:'\\\",.<>\\/?]).{8,}$"
+      )
+    )
+    .required(),
 });
 
 module.exports = { loginSchema, signupSchema };

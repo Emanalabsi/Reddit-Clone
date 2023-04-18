@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reddit: the front page of the internet</title>
+    <script
+      src="https://kit.fontawesome.com/9e866e3193.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" href="favicon.png" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          class="logo-icon"
+        >
+          <g>
+            <circle fill="#FF4500" cx="10" cy="10" r="10"></circle>
+            <path
+              fill="#FFF"
+              d="M16.67,10A1.46,1.46,0,0,0,14.2,9a7.12,7.12,0,0,0-3.85-1.23L11,4.65,13.14,5.1a1,1,0,1,0,.13-0.61L10.82,4a0.31,0.31,0,0,0-.37.24L9.71,7.71a7.14,7.14,0,0,0-3.9,1.23A1.46,1.46,0,1,0,4.2,11.33a2.87,2.87,0,0,0,0,.44c0,2.24,2.61,4.06,5.83,4.06s5.83-1.82,5.83-4.06a2.87,2.87,0,0,0,0-.44A1.46,1.46,0,0,0,16.67,10Zm-10,1a1,1,0,1,1,1,1A1,1,0,0,1,6.67,11Zm5.81,2.75a3.84,3.84,0,0,1-2.47.77,3.84,3.84,0,0,1-2.47-.77,0.27,0.27,0,0,1,.38-0.38A3.27,3.27,0,0,0,10,14a3.28,3.28,0,0,0,2.09-.61A0.27,0.27,0,1,1,12.48,13.79Zm-0.18-1.71a1,1,0,1,1,1-1A1,1,0,0,1,12.29,12.08Z"
+            ></path>
+          </g>
+        </svg>
+        <svg
+          class="logo-reddit"
+          viewBox="0 0 57 18"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g fill="#D7DADC">
+            <path
+              d="M54.63,16.52V7.68h1a1,1,0,0,0,1.09-1V6.65a1,1,0,0,0-.93-1.12H54.63V3.88a1.23,1.23,0,0,0-1.12-1.23,1.2,1.2,0,0,0-1.27,1.11V5.55h-1a1,1,0,0,0-1.09,1v.07a1,1,0,0,0,.93,1.12h1.13v8.81a1.19,1.19,0,0,0,1.19,1.19h0a1.19,1.19,0,0,0,1.25-1.12A.17.17,0,0,0,54.63,16.52Z"
+            ></path>
+            <circle fill="#FF4500" cx="47.26" cy="3.44" r="2.12"></circle>
+            <path
+              d="M48.44,7.81a1.19,1.19,0,1,0-2.38,0h0v8.71a1.19,1.19,0,0,0,2.38,0Z"
+            ></path>
+            <path
+              d="M30.84,1.19A1.19,1.19,0,0,0,29.65,0h0a1.19,1.19,0,0,0-1.19,1.19V6.51a4.11,4.11,0,0,0-3-1.21c-3.1,0-5.69,2.85-5.69,6.35S22.28,18,25.42,18a4.26,4.26,0,0,0,3.1-1.23,1.17,1.17,0,0,0,1.47.8,1.2,1.2,0,0,0,.85-1.05ZM25.41,15.64c-1.83,0-3.32-1.77-3.32-4s1.48-4,3.32-4,3.31,1.78,3.31,4-1.47,3.95-3.3,3.95Z"
+            ></path>
+            <path
+              d="M43.28,1.19A1.19,1.19,0,0,0,42.09,0h0a1.18,1.18,0,0,0-1.18,1.19h0V6.51a4.15,4.15,0,0,0-3-1.21c-3.1,0-5.69,2.85-5.69,6.35S34.72,18,37.86,18A4.26,4.26,0,0,0,41,16.77a1.17,1.17,0,0,0,1.47.8,1.19,1.19,0,0,0,.85-1.05ZM37.85,15.64c-1.83,0-3.31-1.77-3.31-4s1.47-4,3.31-4,3.31,1.78,3.31,4-1.47,3.95-3.3,3.95Z"
+            ></path>
+            <path
+              d="M17.27,12.44a1.49,1.49,0,0,0,1.59-1.38v-.15a4.81,4.81,0,0,0-.1-.85A5.83,5.83,0,0,0,13.25,5.3c-3.1,0-5.69,2.85-5.69,6.35S10.11,18,13.25,18a5.66,5.66,0,0,0,4.39-1.84,1.23,1.23,0,0,0-.08-1.74l-.11-.09a1.29,1.29,0,0,0-1.58.17,3.91,3.91,0,0,1-2.62,1.12A3.54,3.54,0,0,1,10,12.44h7.27Zm-4-4.76a3.41,3.41,0,0,1,3.09,2.64H10.14A3.41,3.41,0,0,1,13.24,7.68Z"
+            ></path>
+            <path
+              d="M7.68,6.53a1.19,1.19,0,0,0-1-1.18A4.56,4.56,0,0,0,2.39,6.91V6.75A1.2,1.2,0,0,0,0,6.75v9.77a1.23,1.23,0,0,0,1.12,1.24,1.19,1.19,0,0,0,1.26-1.1.66.66,0,0,0,0-.14v-5A3.62,3.62,0,0,1,5.81,7.7a4.87,4.87,0,0,1,.54,0h.24A1.18,1.18,0,0,0,7.68,6.53Z"
+            ></path>
+          </g>
+        </svg>
+      </div>
+      <input
+        type="text"
+        value="&#xf002;"
+        id="search-bar"
+        class="fas fa-search"
+      />
+      <div>
+        <a href="./html/login.html" id="login-button">LOG IN</a>
+        <a href="./html/signup.html" id="signup-button">SIGN UP</a>
+        <i class="fas fa-user"></i>
+        <i class="fas fa-caret-down"></i>
+      </div>
+    </nav>
+    <div id="wrapper">
+      <section id="section-trending">
+        <div id="trending-container">
+          <h3>Trending today</h3>
+          <div id="trending-posts-container">
+            <div id="trending-one" class="trending-highlight">
+              <div class="trending-content">
+                <h3>Brexit Stalls</h3>
+                <p>Boris is Britains clown...</p>
+              </div>
+            </div>
+            <div id="trending-two" class="trending-highlight">
+              <div class="trending-content">
+                <h3>BTC new ATH</h3>
+                <p>What bubble...</p>
+              </div>
+            </div>
+            <div id="trending-three" class="trending-highlight">
+              <div class="trending-content">
+                <h3>Generation lost</h3>
+                <p>Children struggle socially...</p>
+              </div>
+            </div>
+            <div id="trending-four" class="trending-highlight">
+              <div class="trending-content">
+                <h3>Coronavirus panic</h3>
+                <p>Panic buying continues...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div id="popular-header">
+        <h3>Popular posts</h3>
+      </div>
+      <div id="main-wrapper">
+        <section class="posts-container">
+          <div class="posts">
+            <div class="post">
+              <div class="left">
+                <span
+                  ><a href="#" id="upvote-button"
+                    ><i class="fas fa-arrow-up"></i></a
+                ></span>
+                <span class="votes" id="votes-number">45.3k</span>
+                <span
+                  ><a href="#" id="downvote-button"
+                    ><i class="fas fa-arrow-down"></i></a
+                ></span>
+              </div>
+              <div class="right">
+                <div class="user" style="justify-content: space-between">
+                  <div style="display: flex; align-items: center">
+                    <div class="user-image">
+                      <img src="/images/avatar.png" />
+                    </div>
+                    <div class="user-name">
+                      <p id="post-user-name">Eman Ahmed</p>
+                      <span id="post-createdAt">an hour ago</span>
+                    </div>
+                  </div>
+                  <div id="delete-button-div">
+                    <button id="delete-button" style="display: none">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+                <div class="post-body">
+                  <p id="post-body2"></p>
+                  <div class="post-image" id="post-image2">
+                    <!-- <img src="/images/1.jpg" alt=""> -->
+                  </div>
+                </div>
+                <div class="post-comments">
+                  <a href="#" id="post-comments"
+                    ><i class="fas fa-comments"></i> 3 Comments</a
+                  >
+                  <div class="new-comment-div">
+                    <form action="">
+                      <p>
+                        Comment as <span id="comment-username">emanhabsi</span>
+                      </p>
+                      <textarea
+                        name="body"
+                        id="comment-body-input"
+                        placeholder="What are your thoughts?"
+                        cols="30"
+                        rows="10"
+                      ></textarea>
+
+                      <div class="button-div">
+                        <button
+                          type="submit"
+                          class="save-button"
+                          id="save-comment-button"
+                          style="margin-top: 0"
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="comments">
+                    <div class="comment">
+                      <div class="comment-user">
+                        <div class="user-image">
+                          <img src="/images/avatar.png" />
+                        </div>
+                        <div class="user-name">
+                          <p>Eman</p>
+                          <span>3 hours ago</span>
+                        </div>
+                      </div>
+                      <div class="comment-text">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Necessitatibus doloribus ipsa odio aliquam
+                          asperiores consequatur iure itaque fuga repellendus
+                          ipsam sit nulla et quasi, provident, earum illum qui
+                          consectetur expedita?
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="comment">
+                      <div class="comment-user">
+                        <div class="user-image">
+                          <img src="/images/avatar.png" />
+                        </div>
+                        <div class="user-name">
+                          <p>Eman</p>
+                          <span>3 hours ago</span>
+                        </div>
+                      </div>
+                      <div class="comment-text">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Necessitatibus doloribus ipsa odio aliquam
+                          asperiores consequatur iure itaque fuga repellendus
+                          ipsam sit nulla et quasi, provident, earum illum qui
+                          consectetur expedita?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="aside">
+          <div id="aside-header">
+            <h3>Top News Communities</h3>
+          </div>
+          <div class="aside-container-box">
+            <div class="popular-item">
+              <a href="#">
+                <span class="pop-number">1</span>
+                <span class="fas fa-sort-up"></span>
+                <span class="pop-icon fas fa-bus"></span>
+                <span class="pop-page">r/BusTrip</span>
+                <hr />
+              </a>
+            </div>
+            <div class="popular-item">
+              <a href="#">
+                <span class="pop-number">2</span>
+                <span class="fas fa-sort-up"></span>
+                <span class="fas fa-globe-europe pop-icon"></span>
+                <span class="pop-page">r/Travel</span>
+                <hr />
+              </a>
+            </div>
+            <div class="popular-item">
+              <a href="#">
+                <span class="pop-number">3</span>
+                <span class="fas fa-sort-up"></span>
+                <span class="pop-icon fas fa-cocktail"></span>
+                <span class="pop-page">r/Cocktails</span>
+                <hr />
+              </a>
+            </div>
+            <div class="popular-item">
+              <a href="#">
+                <span class="pop-number">4</span>
+                <span class="fas fa-sort-up"></span>
+                <span class="pop-icon fas fa-horse"></span>
+                <span class="pop-page">r/HorseRiding</span>
+                <hr />
+              </a>
+            </div>
+            <div class="popular-item">
+              <a href="#">
+                <span class="pop-number">5</span>
+                <span class="fas fa-sort-up"></span>
+                <span class="pop-icon fas fa-tshirt"></span>
+                <span class="pop-page">r/Football</span>
+              </a>
+            </div>
+            <div class="popular-button">
+              <button>VIEW ALL</button>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div id="new-post-modal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Add New Post</h2>
+                <span class="close">&times;</span>
+              </div>
+              <div class="modal-body">
+                <form action="/post/create" method="POST">
+                  <label for="">Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    id="post-title"
+                    placeholder="title"
+                  />
+
+                  <label>Post</label>
+                  <textarea
+                    name="body"
+                    id="post-body"
+                    cols="30"
+                    rows="10"
+                  ></textarea>
+
+                  <label for="">Image</label>
+                  <input
+                    type="text"
+                    name="image"
+                    id="post-image"
+                    placeholder="image url"
+                  />
+
+                  <div class="button-div">
+                    <button
+                      type="submit"
+                      class="save-button"
+                      id="save-post-button"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div id="login-modal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close">&times;</span>
+              </div>
+              <div class="modal-body">
+                <form action="" method="POST">
+                  <label for="">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="login-username"
+                    placeholder="username"
+                  />
+
+                  <label for="">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="login-password"
+                    placeholder="password"
+                  />
+
+                  <div class="button-div">
+                    <button
+                      type="submit"
+                      class="save-button"
+                      id="save-login-button"
+                    >
+                      login
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div id="signup-modal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Signup</h2>
+                <span class="close">&times;</span>
+              </div>
+              <div class="modal-body">
+                <form action="" method="POST">
+                  <label for="">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="signup-name"
+                    placeholder="Name"
+                  />
+
+                  <label for="">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="signup-username"
+                    placeholder="username"
+                  />
+
+                  <label for="">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="signup-email"
+                    placeholder="email"
+                  />
+
+                  <label for="">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="signup-password"
+                    placeholder="password"
+                  />
+
+                  <label for="">Confirm Password</label>
+                  <input
+                    type="password"
+                    name="confirmedPassword"
+                    id="signup-confirmedPassword"
+                    placeholder="confirm password"
+                  />
+
+                  <div class="button-div">
+                    <button
+                      type="submit"
+                      class="save-button"
+                      id="save-signup-button"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
