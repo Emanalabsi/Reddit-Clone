@@ -4,10 +4,9 @@ DROP TABLE IF EXISTS votes, comments, posts, users;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL UNIQUE,
+  username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  img_url TEXT
+  password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE posts (

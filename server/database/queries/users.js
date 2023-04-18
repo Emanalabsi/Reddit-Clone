@@ -1,22 +1,29 @@
 const connection = require("../config");
 
-const loginQuery = (userData) => {
-  const { username } = userData;
-
+const loginQuery = (email) => {
   const sql = {
-    text: `SELECT id,username, email,password, img_url FROM users where username=$1`,
-    values: [username],
+    text: `SELECT id,username, email,password FROM users where email=$1;`,
+    values: [email],
   };
 
   return connection.query(sql);
 };
+
 const signupQuery = (userData) => {
-  const { username, password, email, img_url } = userData;
+  const { username, password, email } = userData;
   const sql = {
-    text: `INSERT INTO users (username,password,email,img_url) values ($1,$2,$3,$4);`,
-    value: [username, password, email, img_url],
+    text: `INSERT INTO users (username,password,email) values ($1,$2,$3) RETURNING *;`,
+    values: [username, password, email],
   };
   return connection.query(sql);
 };
 
-module.exports = { loginQuery, signupQuery };
+const checkUserQuery = (email) => {
+  const sql = {
+    text: `SELECT * FROM users where email = $1;`,
+    values: [email],
+  };
+  return connection.query(sql);
+};
+
+module.exports = { loginQuery, signupQuery, checkUserQuery };
