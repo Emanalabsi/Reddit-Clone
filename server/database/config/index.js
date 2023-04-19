@@ -1,3 +1,5 @@
 const connection = require("./connection");
 
-module.exports = connection;
+const build = require("./build");
+
+module.exports = { connection, build };
