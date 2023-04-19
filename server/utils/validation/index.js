@@ -1,4 +1,4 @@
-const postSchema = require("./posts");
+const { postSchema, updatePostSchema } = require("./posts");
 const { loginSchema, signupSchema } = require("./users");
 
-module.exports = { postSchema, loginSchema, signupSchema };
+module.exports = { postSchema, loginSchema, signupSchema, updatePostSchema };
