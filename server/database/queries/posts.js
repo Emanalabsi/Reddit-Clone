@@ -7,11 +7,11 @@ const getAllPostsQuery = () => {
   return connection.query(sql);
 };
 
-const addPostQuery = (postData) => {
-  const { title, description, media, user_id } = postData;
+const addPostQuery = (postData, id) => {
+  const { title, description, media } = postData;
   const sql = {
     text: `INSERT INTO posts (title, description, media, user_id) values ($1,$2,$3,$4) RETURNING *;`,
-    values: [title, description, media, user_id],
+    values: [title, description, media, id],
   };
   return connection.query(sql);
 };
@@ -29,7 +29,7 @@ const getِUserPostsQuery = (userId) => {
     text: `SELECT p.title, p.description, p.media, u.username FROM posts p INNER JOIN users u on u.id = p.user_id WHERE u.id = $1;`,
     values: [userId],
   };
-  connection.query(sql);
+  return connection.query(sql);
 };
 
 const getPostByIdQuery = (postId) => {

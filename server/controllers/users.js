@@ -25,7 +25,7 @@ const signup = (req, res, next) => {
     .then((hash) => signupQuery({ username, email, password: hash }))
     .then((newUserData) => {
       req.user = newUserData.rows[0];
-      return generateToken({ username: req.user.username });
+      return generateToken({ username: req.user.username, id: req.user.id });
     })
     .then((token) => {
       res.cookie("token", token, { httpOnly: true }).json({
@@ -57,7 +57,7 @@ const login = (req, res, next) => {
       if (!match) {
         throw new CustomError("email or password is incorrect", 400);
       }
-      return generateToken({ email: req.user.email });
+      return generateToken({ email: req.user.email, id: req.user.id });
     })
     .then((token) => {
       res

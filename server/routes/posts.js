@@ -5,15 +5,17 @@ const {
   addPost,
   deletePost,
   updatePost,
-  getSinglePost,
+  getPost,
 } = require("../controllers/posts");
-
-postsRouter.post("/new", addPost);
-
-postsRouter.get("/:id", getSinglePost);
-// postsRouter.put("/:id", updatePost);
-postsRouter.delete("/:id", deletePost);
+const { isAuth } = require("../middlewares");
 
 postsRouter.get("/", getAllPosts);
+
+postsRouter.use(isAuth);
+
+postsRouter.post("/new", addPost);
+postsRouter.get("/:id", getPost);
+// postsRouter.put("/:id", updatePost);
+postsRouter.delete("/:id", deletePost);
 
 module.exports = postsRouter;
