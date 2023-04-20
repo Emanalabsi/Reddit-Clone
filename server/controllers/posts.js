@@ -9,7 +9,7 @@ const { CustomError } = require("../utils");
 
 const { postSchema, updatePostSchema } = require("../utils/validation");
 
-const getSinglePost = (req, res, next) => {
+const getPost = (req, res, next) => {
   const { id } = req.params;
   getPostByIdQuery(id)
     .then((result) => {
@@ -23,20 +23,24 @@ const getSinglePost = (req, res, next) => {
 
 const getAllPosts = (req, res, next) => {
   getAllPostsQuery()
-    .then((data) =>
+    .then((result) => {
+      if (result.rowCount === 0) {
+        throw new CustomError("Posts not found", 401);
+      }
       res.json({
         error: false,
-        message: data.rows,
-      })
-    )
+        message: result.rows,
+      });
+    })
     .catch((err) => next(err));
 };
 
 const addPost = (req, res, next) => {
-  const { title, description, media, user_id } = req.body;
+  const { id } = req.user;
+  const { title, description, media } = req.body;
   postSchema
-    .validateAsync({ title, description, media, user_id })
-    .then((validated) => addPostQuery(validated))
+    .validateAsync({ title, description, media })
+    .then((validated) => addPostQuery(validated, id))
     .then((result) => {
       if (result.rowCount === 1) {
         return res.json({ error: false, message: "Post created" });
@@ -57,7 +61,7 @@ const deletePost = (req, res, next) => {
 
 // const updatePost = (req, res, next) => {
 //   const { id } = req.params;
-//   // const { title, description } = req.body;
+//   const { title, description } = req.body;
 //   getPostByIdQuery(id)
 //     .then((post) => {
 //       if (post.rowCount === 0) {
@@ -66,9 +70,9 @@ const deletePost = (req, res, next) => {
 //       return post.rows[0];
 //     })
 //     .then(() => {
-//       updatePostSchema.validateAsync(req.body);
+//       updatePostSchema.validateAsync({ title, description });
 //     })
-//     .then((validated) => updatePostQuery({ title, description }))
+//     .then((validated) => updatePostQuery(validated))
 //     .then(() => {
 //       return res.json({
 //         error: false,
@@ -82,6 +86,6 @@ module.exports = {
   getAllPosts,
   addPost,
   deletePost,
-  getSinglePost,
+  getPost,
   // updatePost,
 };
