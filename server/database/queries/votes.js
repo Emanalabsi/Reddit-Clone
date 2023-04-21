@@ -16,4 +16,13 @@ const voteQuery = (postId, userId, vote) => {
   return connection.query(sql);
 };
 
+const countVotes = () => {
+  const sql = {
+    text: `SELECT posts.title, SUM(CASE WHEN votes.vote = 1 THEN 1 ELSE 0 END) AS upvotes, SUM(CASE WHEN votes.vote = -1 THEN 1 ELSE 0 END) AS downvotes
+    FROM posts
+    LEFT JOIN votes ON posts.id = votes.post_id
+    GROUP BY posts.id;`,
+  };
+  return connection.query(sql);
+};
 module.exports = { checkVoteQuery, voteQuery };

@@ -24,14 +24,6 @@ const deletePostQuery = (postId) => {
   return connection.query(sql);
 };
 
-const getِUserPostsQuery = (userId) => {
-  const sql = {
-    text: `SELECT p.title, p.description, p.media, u.username FROM posts p INNER JOIN users u on u.id = p.user_id WHERE u.id = $1;`,
-    values: [userId],
-  };
-  return connection.query(sql);
-};
-
 const getPostByIdQuery = (postId) => {
   const sql = {
     text: `SELECT * FROM posts WHERE id = $1;`,
@@ -51,7 +43,6 @@ const updatePostQuery = (title, description, postId) => {
 module.exports = {
   addPostQuery,
   deletePostQuery,
-  getِUserPostsQuery,
   getAllPostsQuery,
   getPostByIdQuery,
   updatePostQuery,
