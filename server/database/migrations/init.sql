@@ -31,10 +31,16 @@ CREATE TABLE comments (
 
 CREATE TABLE votes (
   user_id INT NOT NULL,
-  post_id INT NOT NULL,
-  vote BOOLEAN NOT NULL,
+  post_id INT,
+  vote INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (user_id,post_id)
+  CONSTRAINT FK_USER_ID  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FK_POST_ID FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   CONSTRAINT check_unique_vote UNIQUE (user_id, post_id),
+    CONSTRAINT CHECK_VOTE CHECK (
+        vote = 1
+        OR vote = -1
+    )
 );
 
 CREATE INDEX idx_users_username ON users(username);
