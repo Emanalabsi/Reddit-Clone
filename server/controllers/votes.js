@@ -12,11 +12,11 @@ const vote = (req, res, next) => {
       }
     })
     .then(() => {
-      voteQuery(postId, id, vote);
+      return voteQuery(postId, id, vote);
     })
     .then((data) =>
       res.json({
-        success: true,
+        error: false,
         data: data.rows,
       })
     )
