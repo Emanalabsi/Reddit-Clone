@@ -7,15 +7,7 @@ const getِUserPostsQuery = (userId) => {
     posts.title AS post_title, 
     posts.description AS post_description,
     posts.media AS post_media,
-    comments.id AS comment_id, 
-    comments.content AS comment_content, 
-    votes.vote AS vote_value 
-    FROM posts
-    JOIN users ON posts.user_id = users.id
-    LEFT JOIN comments ON posts.id = comments.post_id
-    LEFT JOIN votes ON posts.id = votes.post_id
-    WHERE users.id =2
-    ORDER BY posts.id, comments.id;
+   json_agg(json_build_object('comment_id', comments.id, 'comment_content', comments.content, 'vote_value', votes.vote)) AS comments FROM posts JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN votes ON posts.id = votes.post_id WHERE users.id = $1 GROUP BY posts.id,posts.title,posts.description, posts.media ORDER BY posts.id;
   `,
     values: [userId],
   };
