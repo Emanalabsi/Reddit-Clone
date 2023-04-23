@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="icon" href="favicon.png" />
+    <link rel="icon" href="./images/reddit-head.png" />
   </head>
   <body>
     <nav>
@@ -286,7 +286,7 @@
                         rows="10"
                       ></textarea>
 
-                      <div class="comment_button">
+                      <div class="comments-button-icon">
                         <a href="#" id="post-comments"
                           ><i class="fas fa-comments"></i> show comments</a
                         >
@@ -394,153 +394,6 @@
             </div>
             <div class="popular-button">
               <button>VIEW ALL</button>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div id="new-post-modal" class="modal">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2>Add New Post</h2>
-                <span class="close">&times;</span>
-              </div>
-              <div class="modal-body">
-                <form action="/post/create" method="POST">
-                  <label for="">Title</label>
-                  <input
-                    type="text"
-                    name="title"
-                    id="post-title"
-                    placeholder="title"
-                  />
-
-                  <label>Post</label>
-                  <textarea
-                    name="body"
-                    id="post-body"
-                    cols="30"
-                    rows="10"
-                  ></textarea>
-
-                  <label for="">Image</label>
-                  <input
-                    type="text"
-                    name="image"
-                    id="post-image"
-                    placeholder="image url"
-                  />
-
-                  <div class="button-div">
-                    <button
-                      type="submit"
-                      class="save-button"
-                      id="save-post-button"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <div id="login-modal" class="modal">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2>Login</h2>
-                <span class="close">&times;</span>
-              </div>
-              <div class="modal-body">
-                <form action="" method="POST">
-                  <label for="">Username</label>
-                  <input
-                    type="text"
-                    name="username"
-                    id="login-username"
-                    placeholder="username"
-                  />
-
-                  <label for="">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="login-password"
-                    placeholder="password"
-                  />
-
-                  <div class="button-div">
-                    <button
-                      type="submit"
-                      class="save-button"
-                      id="save-login-button"
-                    >
-                      login
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <div id="signup-modal" class="modal">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2>Signup</h2>
-                <span class="close">&times;</span>
-              </div>
-              <div class="modal-body">
-                <form action="" method="POST">
-                  <label for="">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="signup-name"
-                    placeholder="Name"
-                  />
-
-                  <label for="">Username</label>
-                  <input
-                    type="text"
-                    name="username"
-                    id="signup-username"
-                    placeholder="username"
-                  />
-
-                  <label for="">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="signup-email"
-                    placeholder="email"
-                  />
-
-                  <label for="">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="signup-password"
-                    placeholder="password"
-                  />
-
-                  <label for="">Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmedPassword"
-                    id="signup-confirmedPassword"
-                    placeholder="confirm password"
-                  />
-
-                  <div class="button-div">
-                    <button
-                      type="submit"
-                      class="save-button"
-                      id="save-signup-button"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
         </section>

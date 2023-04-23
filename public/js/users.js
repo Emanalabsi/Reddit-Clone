@@ -17,6 +17,7 @@ const login = (userData) => {
 signupForm.addEventListener("click", (event) => {
   signup(getFormInputs(event.target));
 });
+
 loginForm.addEventListener("click", (event) => {
   login(getFormInputs(event.target));
 });
