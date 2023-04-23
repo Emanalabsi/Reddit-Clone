@@ -9,7 +9,6 @@ const postSchema = Joi.object({
 const updatePostSchema = Joi.object({
   title: Joi.string().min(3).max(20),
   description: Joi.string().min(3).max(1000),
-  id: Joi.number(),
 });
 
 module.exports = { postSchema, updatePostSchema };

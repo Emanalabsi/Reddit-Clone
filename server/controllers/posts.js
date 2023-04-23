@@ -5,6 +5,7 @@ const {
   getPostByIdQuery,
   updatePostQuery,
 } = require("../database/queries/posts");
+
 const { CustomError } = require("../utils");
 
 const { postSchema, updatePostSchema } = require("../utils/validation");
@@ -59,33 +60,33 @@ const deletePost = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// const updatePost = (req, res, next) => {
-//   const { id } = req.params;
-//   const { title, description } = req.body;
-//   getPostByIdQuery(id)
-//     .then((post) => {
-//       if (post.rowCount === 0) {
-//         throw new CustomError(401, "Post not found");
-//       }
-//       return post.rows[0];
-//     })
-//     .then(() => {
-//       updatePostSchema.validateAsync({ title, description });
-//     })
-//     .then((validated) => updatePostQuery(validated))
-//     .then(() => {
-//       return res.json({
-//         error: false,
-//         message: `Post with ID ${id} successfully updated`,
-//       });
-//     })
-//     .catch((err) => next(err));
-// };
+const updatePost = (req, res, next) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+  getPostByIdQuery(id)
+    .then((post) => {
+      if (post.rowCount === 0) {
+        throw new CustomError(401, "Post not found");
+      }
+      return post.rows;
+    })
+    .then(() => {
+      updatePostSchema.validateAsync({ title, description });
+    })
+    .then(() => updatePostQuery(title, description, id))
+    .then(() => {
+      return res.json({
+        error: false,
+        message: `Post with ID ${id} successfully updated`,
+      });
+    })
+    .catch((err) => next(err));
+};
 
 module.exports = {
   getAllPosts,
   addPost,
   deletePost,
   getPost,
-  // updatePost,
+  updatePost,
 };
