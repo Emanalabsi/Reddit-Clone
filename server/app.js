@@ -16,9 +16,9 @@ app.use([
   cookieParser(),
 ]);
 
+app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/api/v1", router);
 app.use(serverError);
 app.use(clientError);
-app.use(express.static(path.join(__dirname, "..", "public")));
 
 module.exports = app;
