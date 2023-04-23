@@ -15,7 +15,7 @@ postsRouter.use(isAuth);
 
 postsRouter.post("/new", addPost);
 postsRouter.get("/:id", getPost);
-// postsRouter.put("/:id", updatePost);
+postsRouter.put("/:id", updatePost);
 postsRouter.delete("/:id", deletePost);
 
 module.exports = postsRouter;

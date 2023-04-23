@@ -1,19 +1,17 @@
-const getِUserPostsQuery = require("../database/queries/profile");
+const getUserPostsQuery = require("../database/queries/profile");
 
 const getUserPosts = (req, res, next) => {
   const { id } = req.user;
-  getِUserPostsQuery(id)
+  getUserPostsQuery(id)
     .then((result) => {
       if (result.rowCount === 0) {
         throw new CustomError("No posts found", 401);
       }
-    })
-    .then((data) =>
-      res.json({
+      res.status(200).json({
         error: false,
-        data: data.rows,
-      })
-    )
+        data: result.rows,
+      });
+    })
     .catch((err) => next(err));
 };
 
