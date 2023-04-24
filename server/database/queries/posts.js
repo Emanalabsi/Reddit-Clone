@@ -7,6 +7,7 @@ const getAllPostsQuery = () => {
     posts.title AS post_title, 
     posts.description AS post_description,
     posts.media AS post_media,
+    posts.created_at AS created_at,
     json_agg(json_build_object('comment_id', comments.id, 'comment_content', comments.content, 'vote_value', votes.vote, 'username', users.username, 'commenter_name', comment_users.username)) AS comments 
     FROM posts 
     JOIN users ON posts.user_id = users.id 

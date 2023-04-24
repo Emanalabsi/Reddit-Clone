@@ -206,7 +206,10 @@
  #popular-header {
      padding: 0px 24px;
      font-size: 12px;
+     display: flex;
+     justify-content: space-between;
  }
+
 
  #popular-header h3 {
      color: #ffffff;
@@ -287,7 +290,7 @@
 
  /* aside column */
  /*
-abdallah 
+
  */
  .posts-container {
      max-width: 700px;
@@ -335,13 +338,19 @@ abdallah
      align-items: center;
  }
 
+ .user-info {
+     display: flex;
+     align-items: center
+ }
+
  .user-image {
      margin-right: 0.7rem;
  }
 
  .user-image img {
-     width: 3rem;
-     border-radius: 9999px;
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
  }
 
  .user-name p {
@@ -362,6 +371,11 @@ abdallah
      line-height: 1rem;
  }
 
+ .posts {
+     display: flex;
+     flex-direction: column;
+     gap: 18px;
+ }
 
  .post-body {
      margin-top: 1rem;
@@ -384,10 +398,11 @@ abdallah
      color: #fff;
  }
 
- .comment_button {
+ .comments-button-icon {
      display: flex;
      flex-grow: 1;
      justify-content: space-between;
+     align-items: center;
  }
 
  .post-comments a {
