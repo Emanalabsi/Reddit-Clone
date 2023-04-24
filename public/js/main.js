@@ -36,7 +36,7 @@ for (const button of closeModalButtons) {
   });
 }
 
-const postRequest = (url, data) => {
+const postRequest = (url, data, redirectUrl) => {
   return fetch(url, {
     method: "POST",
     headers: {
@@ -44,5 +44,9 @@ const postRequest = (url, data) => {
     },
     redirect: "follow",
     body: JSON.stringify(data),
-  }).then((result) => result.json());
+  })
+    .then(() => {
+      window.location.href = redirectUrl;
+    })
+    .catch((error) => console.log(error));
 };
