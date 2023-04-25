@@ -9,27 +9,6 @@ function getFormData(form) {
   return data;
 }
 
-const postRequest = (url, data, redirectUrl) => {
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    body: JSON.stringify(data),
-  })
-    .then((result) => result.json())
-    .then((data) => {
-      console.log(data);
-      if (data.message === "Logged in successfully") {
-        window.location.href = redirectUrl;
-      } else if (data.data.massage === "user created successfully") {
-        window.location.href = redirectUrl;
-      }
-    })
-    .catch((error) => console.log(error));
-};
-
 const resetTime = (creationTime) => {
   let theTime = "";
   const now = Date.now();
