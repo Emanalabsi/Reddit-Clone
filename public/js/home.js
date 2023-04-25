@@ -1,4 +1,4 @@
-const allPostsDiv = document.querySelector(".posts");
+// const allPostsDiv = document.querySelector(".posts");
 const addPostForm = document.querySelector("#addPostForm");
 
 const addPostButton = document.querySelector("#add-post");

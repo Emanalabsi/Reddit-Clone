@@ -9,10 +9,10 @@ const addComment = (req, res) => {
   const { id } = req.user;
   const { postId } = req.params;
   addCommentQuery(content, id, postId).then((data) => {
-    console.log(data);
-    res.status(200).json({
+    res.json({
       error: false,
       message: "your comment created succesfully",
+      data: data.rows,
     });
   });
 };

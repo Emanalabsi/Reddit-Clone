@@ -1,10 +1,10 @@
+const allPostsDiv = document.querySelector(".posts");
+
 const addComment = () => {
   fetch("api/v1/comments");
 };
 
 const renderPostCard = (data) => {
-  const allPostsDiv = document.querySelector(".posts");
-
   const postDiv = document.createElement("div");
   postDiv.classList.add("post");
 
@@ -140,13 +140,14 @@ const renderPostCard = (data) => {
   commentsLink.appendChild(commentsText);
 
   postComments.appendChild(commentsLink);
+
   //aya
   const commentForm = document.createElement("form");
   commentForm.className = "comment-form";
   const commentTextArea = document.createElement("input");
   commentTextArea.setAttribute("type", "text");
   // commentTextArea.className = "comment-text";
-  commentTextArea.name = "comment";
+  commentTextArea.name = "content";
   commentTextArea.placeholder = "What are your thoughts?";
 
   commentForm.appendChild(commentTextArea);
@@ -156,36 +157,41 @@ const renderPostCard = (data) => {
   commentButton.type = "submit";
   commentButton.textContent = "comment";
   commentButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    const commentVal = commentTextArea.value;
     console.log(data.post_id);
-    console.log(commentVal);
+    console.log(commentTextArea.value);
+    event.preventDefault();
     fetch(`/api/v1/comments/${data.post_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       redirect: "follow",
-      body: JSON.stringify(commentVal),
+      body: JSON.stringify(commentTextArea.value),
     })
       .then((result) => result.json())
-      .then(console.log);
+      .then((data) => console.log(data));
   });
   commentForm.appendChild(commentButton);
 
   postComments.appendChild(commentForm);
   const commentsArray = data.comments;
 
+  // postComments.appendChild(commentDiv);
+  rightDiv.append(postComments);
+
+  postDiv.append(leftDiv);
+  postDiv.append(rightDiv);
+  allPostsDiv.prepend(postDiv);
+};
+
+const createComment = (data) => {
   const user = document.createElement("p");
   user.textContent = data.comments[0].commenter_name;
-
-  const createAt = document.createElement("span");
 
   const userName = document.createElement("div");
   userName.classList.add("user-name");
 
   userName.appendChild(user);
-  userName.appendChild(createAt);
 
   const commenterImage = document.createElement("div");
   commenterImage.classList.add("user-image");
@@ -209,12 +215,7 @@ const renderPostCard = (data) => {
   commentDiv.appendChild(commentUser);
   commentDiv.appendChild(commentText);
 
-  postComments.appendChild(commentDiv);
-  rightDiv.append(postComments);
-
-  postDiv.append(leftDiv);
-  postDiv.append(rightDiv);
-  allPostsDiv.prepend(postDiv);
+  return commentDiv;
 };
 
 const renderAllPosts = (posts) => {
