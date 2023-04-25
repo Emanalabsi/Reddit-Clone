@@ -1,19 +1,8 @@
-function getFormData(form) {
-  const formData = new FormData(form);
-  const data = {};
-
-  for (const [key, value] of formData.entries()) {
-    data[key] = value;
-  }
-  form.reset();
-  return data;
-}
-
 const signup = (userData) =>
-  postRequest("/api/v1/users/signup", userData, "api/v1/pages/home");
+  postRequest("/api/v1/users/signup", userData, "/home");
 
 const login = (userData) =>
-  postRequest("/api/v1/users/login", userData, "api/v1/pages/home");
+  postRequest("/api/v1/users/login", userData, "/home");
 
 signupForm.addEventListener("submit", (event) => {
   event.preventDefault();

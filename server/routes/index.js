@@ -5,13 +5,11 @@ const postsRouter = require("./posts");
 const profileRouter = require("./profile");
 const userRouter = require("./users");
 const votesRouter = require("./votes");
-const pagesRouters = require("./pages");
 
 router.use("/comments", commentsRouter);
 router.use("/users", userRouter);
 router.use("/posts", postsRouter);
 router.use("/votes", votesRouter);
 router.use("/profile", profileRouter);
-router.use("/pages", pagesRouters);
 
 module.exports = router;

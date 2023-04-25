@@ -1,58 +1,41 @@
-const allPostsDiv = document.querySelector(".posts");
-
-fetch("/api/v1/posts")
-  .then((result) => result.json())
-  .then((data) => renderAllPosts(data));
-
-const resetTime = (creationTime) => {
-  let theTime = "";
-  const now = Date.now();
-  const timesTamp = new Date(creationTime);
-  const melSecond = now - timesTamp.getTime();
-  const toMinutes = Math.floor(melSecond / (1000 * 60));
-  const toHours = Math.floor(melSecond / (1000 * 60 * 60));
-
-  if (melSecond < 1000 * 60 * 60) {
-    theTime = `${toMinutes} minutes ago `;
-  } else if (melSecond < 1000 * 60 * 60 * 24) {
-    theTime = `${toHours} hours ago `;
-  } else {
-    theTime = timesTamp.toISOString().slice(0, 10);
-  }
-
-  return theTime;
+const addComment = () => {
+  fetch("api/v1/comments");
 };
 
 const renderPostCard = (data) => {
+  const allPostsDiv = document.querySelector(".posts");
+
   const postDiv = document.createElement("div");
   postDiv.classList.add("post");
 
   const leftDiv = document.createElement("div");
   leftDiv.classList.add("left");
 
-  const upvoteLink = document.createElement("a");
-  upvoteLink.setAttribute("href", "#");
-  upvoteLink.setAttribute("id", "upvote-button");
-  leftDiv.append(upvoteLink);
+  const upvoteButton = document.createElement("a");
+  upvoteButton.setAttribute("href", "#");
+  upvoteButton.setAttribute("id", "upvote-button");
 
   const upvoteIcon = document.createElement("i");
   upvoteIcon.classList.add("fas", "fa-arrow-up");
-  leftDiv.append(upvoteIcon);
 
-  const votesSpan = document.createElement("span");
-  votesSpan.classList.add("votes");
-  votesSpan.setAttribute("id", "votes-number");
-  votesSpan.innerHTML = "45.3k";
-  leftDiv.append(votesSpan);
+  upvoteButton.appendChild(upvoteIcon);
+  leftDiv.appendChild(upvoteButton);
 
-  const downvoteLink = document.createElement("a");
-  downvoteLink.setAttribute("href", "#");
-  downvoteLink.setAttribute("id", "downvote-button");
-  leftDiv.append(downvoteLink);
+  const votesNumber = document.createElement("span");
+  votesNumber.classList.add("votes");
+  votesNumber.setAttribute("id", "votes-number");
+  votesNumber.textContent = "45.3k";
+  leftDiv.appendChild(votesNumber);
+
+  const downvoteButton = document.createElement("a");
+  downvoteButton.setAttribute("href", "#");
+  downvoteButton.setAttribute("id", "downvote-button");
 
   const downvoteIcon = document.createElement("i");
   downvoteIcon.classList.add("fas", "fa-arrow-down");
-  leftDiv.append(downvoteIcon);
+
+  downvoteButton.appendChild(downvoteIcon);
+  leftDiv.appendChild(downvoteButton);
 
   postDiv.appendChild(leftDiv);
 
@@ -69,30 +52,36 @@ const renderPostCard = (data) => {
 
   const userImageDiv = document.createElement("div");
   userImageDiv.classList.add("user-image");
-  userInfo.appendChild(userImageDiv);
 
   const userImage = document.createElement("img");
-  userImage.setAttribute("src", "../images/");
+  userImage.setAttribute("src", "../images/avatar.png");
   userImageDiv.appendChild(userImage);
-  userInfo.appendChild(userImage);
+
+  userInfo.appendChild(userImageDiv);
 
   const userNameDiv = document.createElement("div");
   userNameDiv.classList.add("user-name");
 
   const postUserName = document.createElement("p");
   postUserName.setAttribute("id", "post-user-name");
-  postUserName.innerHTML = data.comments[0].username;
+  postUserName.textContent = data.comments[0].username;
   userNameDiv.appendChild(postUserName);
 
   const postCreatedAt = document.createElement("span");
   postCreatedAt.setAttribute("id", "post-createdAt");
-  postCreatedAt.innerHTML = resetTime(resetTime(data.created_at));
+
+  const userEmail = document.createElement("span");
+  userEmail.setAttribute("id", "user-email");
+  userEmail.textContent = data.comments[0].email;
+  // userEmail.addEventListener("click", (event) => {
+  //   fetch("/");
+  // });
+
+  postCreatedAt.textContent = resetTime(data.created_at);
+
+  userNameDiv.appendChild(userEmail);
   userNameDiv.appendChild(postCreatedAt);
 
-  const postImage = document.createElement("img");
-  postImage.setAttribute("src", data.post_media);
-  postImage.setAttribute("alt", "");
-  userInfo.appendChild(postImage);
   userInfo.append(userNameDiv);
 
   const deleteButtonDiv = document.createElement("div");
@@ -110,83 +99,122 @@ const renderPostCard = (data) => {
   const postBodyDiv = document.createElement("div");
   postBodyDiv.classList.add("post-body");
 
-  const postBody = document.createElement("p");
-  postBody.setAttribute("id", "post-body2");
-  postBody.innerHTML = data.post_description;
-  postBodyDiv.appendChild(postBody);
+  const postTitle = document.createElement("p");
+  postTitle.classList.add("post-title");
+  postTitle.textContent = data.post_title;
+  postBodyDiv.appendChild(postTitle);
+
+  const postDescription = document.createElement("p");
+  postDescription.classList.add("post-description");
+  postDescription.textContent = data.post_description;
+  postBodyDiv.appendChild(postDescription);
 
   const postImageDiv = document.createElement("div");
-  postImageDiv.setAttribute("id", "post-image2");
   postImageDiv.classList.add("post-image");
 
+  if (!data.post_media) {
+    postImageDiv.style.display = "none";
+  }
   const postBodyImage = document.createElement("img");
-  postBodyImage.setAttribute(
-    "src",
-    "https://images.unsplash.com/photo-1682079470276-619657e2a48b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=489&q=80"
-  );
-  postBodyDiv.append(postBodyImage);
+  postBodyImage.setAttribute("src", data.post_media);
+  postImageDiv.append(postBodyImage);
 
   postBodyDiv.appendChild(postImageDiv);
   rightDiv.appendChild(postBodyDiv);
 
-  const postCommentsDiv = document.createElement("div");
-  postCommentsDiv.className = "post-comments";
+  const postComments = document.createElement("div");
+  postComments.classList.add("post-comments");
 
-  const newCommentDiv = document.createElement("div");
-  newCommentDiv.className = "new-comment-div";
+  const commentsLink = document.createElement("a");
+  commentsLink.addEventListener("click", () => {
+    data.comments.length === 0
+      ? console.log("no comments")
+      : commentDiv.classList.toggle("comment-show");
+  });
 
+  const commentsIcon = document.createElement("i");
+  commentsIcon.classList.add("fas", "fa-comments");
+  commentsLink.appendChild(commentsIcon);
+
+  const commentsText = document.createTextNode("show comments");
+  commentsLink.appendChild(commentsText);
+
+  postComments.appendChild(commentsLink);
+  //aya
   const commentForm = document.createElement("form");
-  commentForm.action = "";
+  commentForm.className = "comment-form";
+  const commentTextArea = document.createElement("input");
+  commentTextArea.setAttribute("type", "text");
+  // commentTextArea.className = "comment-text";
+  commentTextArea.name = "comment";
+  commentTextArea.placeholder = "What are your thoughts?";
 
-  const commentInput = document.createElement("textarea");
-  commentInput.name = "body";
-  commentInput.id = "comment-body-input";
-  commentInput.placeholder = "What are your thoughts?";
-  commentInput.cols = "30";
-  commentInput.rows = "10";
+  commentForm.appendChild(commentTextArea);
 
-  commentForm.appendChild(commentInput);
+  const commentButton = document.createElement("button");
+  commentButton.className = "comment-button";
+  commentButton.type = "submit";
+  commentButton.textContent = "comment";
+  commentButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    const commentVal = commentTextArea.value;
+    console.log(data.post_id);
+    console.log(commentVal);
+    fetch(`/api/v1/comments/${data.post_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      body: JSON.stringify(commentVal),
+    })
+      .then((result) => result.json())
+      .then(console.log);
+  });
+  commentForm.appendChild(commentButton);
 
-  const commentsButtonIcon = document.createElement("div");
-  commentsButtonIcon.className = "comments-button-icon";
+  postComments.appendChild(commentForm);
+  const commentsArray = data.comments;
 
-  const showCommentsLink = document.createElement("a");
-  showCommentsLink.href = "#";
-  showCommentsLink.id = "post-comments";
+  const user = document.createElement("p");
+  user.textContent = data.comments[0].commenter_name;
 
-  const showCommentsIcon = document.createElement("i");
-  showCommentsIcon.className = "fas fa-comments";
+  const createAt = document.createElement("span");
 
-  showCommentsLink.appendChild(showCommentsIcon);
+  const userName = document.createElement("div");
+  userName.classList.add("user-name");
 
-  const showCommentsText = document.createTextNode("show comments");
+  userName.appendChild(user);
+  userName.appendChild(createAt);
 
-  showCommentsLink.appendChild(showCommentsText);
+  const commenterImage = document.createElement("div");
+  commenterImage.classList.add("user-image");
 
-  commentsButtonIcon.appendChild(showCommentsLink);
+  const commentUser = document.createElement("div");
+  commentUser.classList.add("comment-user");
+  commentUser.appendChild(commenterImage);
+  commentUser.appendChild(userName);
 
-  const commentSubmitButton = document.createElement("button");
-  commentSubmitButton.type = "submit";
-  commentSubmitButton.className = "comment-button";
-  commentSubmitButton.id = "save-comment-button";
-  commentSubmitButton.style.marginTop = "0";
+  const commentText = document.createElement("div");
+  commentText.classList.add("comment-text");
 
-  const commentSubmitText = document.createTextNode("Comment");
+  if (data.comments[0].comment_content != null) {
+    commentText.innerHTML = `<p>${data.comments[0].comment_content}</p>`;
+    commenterImage.innerHTML = '<img src="/images/comment-avatrar.png">';
+  }
 
-  commentSubmitButton.appendChild(commentSubmitText);
+  const commentDiv = document.createElement("div");
+  commentDiv.classList.add("comment");
 
-  commentForm.appendChild(commentsButtonIcon);
-  commentForm.appendChild(commentSubmitButton);
+  commentDiv.appendChild(commentUser);
+  commentDiv.appendChild(commentText);
 
-  newCommentDiv.appendChild(commentForm);
-
-  postCommentsDiv.appendChild(newCommentDiv);
-  const posts = document.querySelector(".posts");
-  rightDiv.appendChild(postCommentsDiv);
+  postComments.appendChild(commentDiv);
+  rightDiv.append(postComments);
 
   postDiv.append(leftDiv);
   postDiv.append(rightDiv);
-  posts.appendChild(postDiv);
+  allPostsDiv.prepend(postDiv);
 };
 
 const renderAllPosts = (posts) => {
@@ -197,35 +225,21 @@ const renderAllPosts = (posts) => {
   });
 };
 
-const showComment = (comment) => {
-  const user = document.createElement("p");
-  user.textContent = comment.name;
+addPostForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = getFormData(event.target);
+  fetch("/api/v1/posts/new", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((result) => result.json())
+    .then(console.log);
+});
 
-  const createAt = document.createElement("span");
-  createAt.textContent = moment(comment.created_at).fromNow();
-
-  const userName = document.createElement("div");
-  userName.classList.add("user-name");
-  userName.appendChild(user);
-  userName.appendChild(createAt);
-
-  const userImage = document.createElement("div");
-  userImage.classList.add("user-image");
-  userImage.innerHTML = '<img src="/images/avatar.png">';
-
-  const commentUser = document.createElement("div");
-  commentUser.classList.add("comment-user");
-  commentUser.appendChild(userImage);
-  commentUser.appendChild(userName);
-
-  const commentText = document.createElement("div");
-  commentText.classList.add("comment-text");
-  commentText.innerHTML = `<p>${comment.body}</p>`;
-
-  const commentDiv = document.createElement("div");
-  commentDiv.classList.add("comment");
-  commentDiv.appendChild(commentUser);
-  commentDiv.appendChild(commentText);
-
-  commentsDiv.appendChild(commentDiv);
-};
+fetch("/api/v1/posts")
+  .then((result) => result.json())
+  .then((data) => renderAllPosts(data))
+  .then(console.log);
