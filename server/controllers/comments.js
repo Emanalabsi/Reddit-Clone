@@ -8,12 +8,13 @@ const addComment = (req, res) => {
   const { content } = req.body;
   const { id } = req.user;
   const { postId } = req.params;
-  addCommentQuery(content, id, postId).then(() =>
+  addCommentQuery(content, id, postId).then((data) => {
+    console.log(data);
     res.status(200).json({
       error: false,
       message: "your comment created succesfully",
-    })
-  );
+    });
+  });
 };
 
 const getComments = (req, res, next) => {

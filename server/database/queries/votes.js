@@ -25,4 +25,4 @@ const countVotes = () => {
   };
   return connection.query(sql);
 };
-module.exports = { checkVoteQuery, voteQuery };
+module.exports = { checkVoteQuery, voteQuery, countVotes };

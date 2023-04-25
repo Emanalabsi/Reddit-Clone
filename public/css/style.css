@@ -29,7 +29,7 @@
      color: white;
  }
 
- /* ===========nav bar and header=========== */
+
  nav {
      display: flex;
      background-color: #1a1a1b;
@@ -282,26 +282,14 @@
      padding: 0px 0px 10px;
  }
 
- #post-image {
-     width: 200px;
-     height: 200px;
-     background-image: url("");
- }
-
- /* aside column */
- /*
-
- */
  .posts-container {
      max-width: 700px;
-     /* margin: 4rem auto; */
      flex-grow: 2;
  }
 
  .post {
      display: flex;
      background-color: #272729;
-     /* margin-top: 1rem; */
      border: 1px solid rgb(196, 196, 196);
      color: #ccc;
  }
@@ -353,6 +341,12 @@
      border-radius: 50%;
  }
 
+ .user-name {
+     display: flex;
+     flex-direction: column;
+     gap: 2px;
+ }
+
  .user-name p {
      font-weight: 500;
      font-size: 1rem;
@@ -364,6 +358,8 @@
  .user-name p:hover {
      text-decoration: underline;
  }
+
+ .comment-form input {}
 
  .user-name span {
      color: rgb(97, 99, 102);
@@ -377,21 +373,84 @@
      gap: 18px;
  }
 
+ .post-title, .post-description {
+     color: white;
+ }
+
  .post-body {
      margin-top: 1rem;
-     color: #fff;
+ }
+
+ .post-body img {
+     margin-top: 4px;
+     min-width: 400px;
  }
 
  .post-image {
-     margin-top: 1rem;
+     margin-top: 0.5rem;
  }
 
  .post-image img {
      max-width: 100%;
  }
 
- .post-comments {
+ .comment {
+     display: none;
      margin-top: 1rem;
+ }
+
+ .comment-show {
+     display: flex;
+ }
+
+ .comment-user {
+     display: flex;
+ }
+
+ .post-comments a {
+     cursor: pointer;
+ }
+
+ .post-comments a i {
+     margin-top: 1rem;
+     padding: 12px;
+     color: white;
+ }
+
+ .dropdown .dropbtn {
+     font-size: 16px;
+     border: none;
+     outline: none;
+     color: white;
+     padding: 14px 16px;
+     background-color: inherit;
+     font-family: inherit;
+ }
+
+ .dropdown-content {
+     display: none;
+     position: absolute;
+     background-color: #f9f9f9;
+     min-width: 100px;
+     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+     z-index: 1;
+ }
+
+ .dropdown-content a {
+     float: none;
+     color: black;
+     padding: 12px 12px;
+     text-decoration: none;
+     display: block;
+     text-align: left;
+ }
+
+ .dropdown-content a:hover {
+     background-color: #ddd;
+ }
+
+ .dropdown:hover .dropdown-content {
+     display: block;
  }
 
  .comment-text p {
@@ -418,26 +477,13 @@
 
  input[type=text], input[type=password], input[type=email], select {
      width: 100%;
-     padding: 12px 20px;
+     padding: 8px 16px;
      margin: 8px 0;
      display: inline-block;
      border: 1px solid #ccc;
      border-radius: 4px;
      box-sizing: border-box;
      margin-bottom: 0.75rem;
- }
-
- textarea {
-     width: 100%;
-     height: 100px;
-     padding: 12px 20px;
-     box-sizing: border-box;
-     border: 2px solid #ccc;
-     border-radius: 4px;
-     background-color: #f8f8f8;
-     resize: none;
-     margin-bottom: 0.75rem;
-     margin-top: 0.25rem;
  }
 
  #aside {
@@ -570,6 +616,7 @@
      color: #fff;
  }
 
+
  .close {
      float: right;
      font-size: 28px;
@@ -617,6 +664,13 @@
      margin-top: 1rem;
  }
 
+ .comment-form {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     gap: 4px;
+ }
+
  .comment-button {
      background-color: #ff4500;
      color: #fff;
@@ -631,7 +685,7 @@
      font-weight: 600;
      text-transform: uppercase;
      padding: 6px 16px;
-     margin-top: 1rem;
+     margin-bottom: 0.5rem;
  }
 
  .save-button:hover {

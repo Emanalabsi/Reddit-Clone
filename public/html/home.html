@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="icon" href="./images/reddit-head.png" />
   </head>
   <body>
@@ -67,10 +67,17 @@
         class="fas fa-search"
       />
       <div>
-        <button id="login-button">LOG IN</button>
-        <button id="signup-button">SIGN UP</button>
-        <i class="fas fa-user" style="color: #fff"></i>
-        <i class="fas fa-caret-down" style="color: #fff"></i>
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fas fa-user" id="user-profile" style="color: #fff"></i>
+            <i class="fas fa-caret-down" id="caretDown" style="color: #fff"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="/api/v1/users/logout"
+              >Logout <i class="fas fa-sign-out-alt"></i
+            ></a>
+          </div>
+        </div>
       </div>
     </nav>
     <div id="wrapper">
@@ -107,7 +114,7 @@
       </section>
       <div id="popular-header">
         <h3>Popular posts</h3>
-        <button class="save-button">Create Post</button>
+        <button class="save-button" id="add-post">Create Post</button>
       </div>
       <div id="main-wrapper">
         <section class="modals">
@@ -118,7 +125,7 @@
                 <span class="close">&times;</span>
               </div>
               <div class="modal-body">
-                <form action="" method="POST">
+                <form id="addPostForm">
                   <label for="">Title</label>
                   <input
                     type="text"
@@ -129,7 +136,7 @@
 
                   <label>Post</label>
                   <textarea
-                    name="body"
+                    name="description"
                     id="post-body"
                     cols="30"
                     rows="10"
@@ -138,7 +145,7 @@
                   <label for="">Image</label>
                   <input
                     type="text"
-                    name="image"
+                    name="media"
                     id="post-image"
                     placeholder="image url"
                   />
@@ -239,110 +246,7 @@
           </div>
         </section>
         <section class="posts-container">
-          <div class="posts">
-            <div class="post">
-              <div class="left">
-                <span
-                  ><a href="#" id="upvote-button"
-                    ><i class="fas fa-arrow-up"></i></a
-                ></span>
-                <span class="votes" id="votes-number">45.3k</span>
-                <span
-                  ><a href="#" id="downvote-button"
-                    ><i class="fas fa-arrow-down"></i></a
-                ></span>
-              </div>
-              <div class="right">
-                <div class="user" style="justify-content: space-between">
-                  <div class="user-info">
-                    <div class="user-image">
-                      <img src="./images/avatar.jpg" />
-                    </div>
-                    <div class="user-name">
-                      <p id="post-user-name">Eman Alabsi</p>
-                      <span id="post-createdAt">an hour ago</span>
-                    </div>
-                    <img src="https://unsplash.com/photos/607uQAsi8hM" alt="" />
-                  </div>
-                  <div id="delete-button-div">
-                    <button id="delete-button" style="display: none">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-                <div class="post-body">
-                  <p id="post-body2"></p>
-                  <div class="post-image" id="post-image2">
-                    <img src="" alt="" />
-                  </div>
-                </div>
-                <div class="post-comments">
-                  <div class="new-comment-div">
-                    <form action="">
-                      <textarea
-                        name="body"
-                        id="comment-body-input"
-                        placeholder="What are your thoughts?"
-                        cols="30"
-                        rows="10"
-                      ></textarea>
-
-                      <div class="comments-button-icon">
-                        <a href="#" id="post-comments"
-                          ><i class="fas fa-comments"></i> show comments</a
-                        >
-                        <button
-                          type="submit"
-                          class="comment-button"
-                          id="save-comment-button"
-                          style="margin-top: 0"
-                        >
-                          Comment
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="comments">
-                    <div class="comment">
-                      <div class="comment-user">
-                        <div class="user-image">
-                          <img src="./images/avatar.jpg" />
-                        </div>
-                        <div class="user-name">
-                          <p>Eman</p>
-                          <span>3 hours ago</span>
-                        </div>
-                      </div>
-                      <div class="comment-text">
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Necessitatibus doloribus ipsa odio aliquam
-                        </p>
-                      </div>
-                    </div>
-
-                    <div class="comment">
-                      <div class="comment-user">
-                        <div class="user-image">
-                          <img src="/images/avatar.png" />
-                        </div>
-                        <div class="user-name">
-                          <p>Eman</p>
-                          <span>3 hours ago</span>
-                        </div>
-                      </div>
-                      <div class="comment-text">
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Necessitatibus doloribus ipsa odio aliquam
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="posts"></div>
         </section>
         <section id="aside">
           <div id="aside-header">
@@ -400,8 +304,8 @@
         </section>
       </div>
     </div>
-    <script src="./js/posts.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/users.js"></script>
+    <script src="../js/generic.js"></script>
+    <script src="../js/home.js"></script>
+    <script src="../js/posts.js"></script>
   </body>
 </html>

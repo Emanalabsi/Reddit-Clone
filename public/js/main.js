@@ -10,11 +10,11 @@ const loginForm = document.querySelector("#login");
 const closeModalButtons = document.getElementsByClassName("close");
 
 signupButton.addEventListener("click", () => {
-  document.getElementById("signup-modal").style.display = "block";
+  signupModal.style.display = "block";
 });
 
 loginButton.addEventListener("click", () => {
-  document.getElementById("login-modal").style.display = "block";
+  loginModal.style.display = "block";
 });
 
 window.addEventListener("click", (event) => {
@@ -35,18 +35,3 @@ for (const button of closeModalButtons) {
     }
   });
 }
-
-const postRequest = (url, data, redirectUrl) => {
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    body: JSON.stringify(data),
-  })
-    .then(() => {
-      window.location.href = redirectUrl;
-    })
-    .catch((error) => console.log(error));
-};
