@@ -1,4 +1,5 @@
 {
+  
   "name": "reddit-clone",
   "version": "1.0.0",
   "description": "This is a Full stack clone of \"Reddit\" built with Express, NodeJS, PostgreSQL and HTML. With a support of  JWT authentication.",
@@ -32,4 +33,5 @@
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22"
   }
+  
 }

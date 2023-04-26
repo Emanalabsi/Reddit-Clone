@@ -1,42 +1,27 @@
-const {
-  voteQuery,
-  checkVoteQuery,
-  countVotesQuery,
-} = require("../database/queries/votes");
-const { CustomError } = require("../utils");
+const { connection } = require("../config");
 
-const vote = (req, res, next) => {
-  const { postId, vote } = req.params;
-  const { id } = req.user;
-  checkVoteQuery(id, postId)
-    .then((data) => {
-      if (data.rows.length && data.rows[0].vote === parseInt(vote, 10)) {
-        throw new CustomError("You have already voted", 400);
-      }
-    })
-    .then(() => {
-      return voteQuery(postId, id, vote);
-    })
-    .then((data) =>
-      res.json({
-        error: false,
-        data: data.rows,
-      })
-    )
-    .catch((err) => next(err));
+const checkVoteQuery = (userId, postId) => {
+  const sql = {
+    text: `SELECT FROM votes WHERE user_id = $1 AND post_id = $2;`,
+    values: [userId, postId],
+  };
+  return connection.query(sql);
 };
 
-const countVotes = (req, res, next) => {
-  const { postId } = req.params;
-  countVotesQuery(postId)
-    .then((data) => {
-      const voteCount = data.rows[0].upvotes - data.rows[0].downvotes;
-      res.json({
-        error: false,
-        data: { voteCount, ...data.rows },
-      });
-    })
-    .catch((err) => next(err));
+const voteQuery = (postId, userId, vote) => {
+  const sql = {
+    text: `INSERT INTO votes (post_id, user_id,vote) values ($1, $2 ,$3) ON CONFLICT (post_id, user_id) DO UPDATE SET vote = $3 RETURNING *;`,
+    values: [postId, userId, vote],
+  };
+  return connection.query(sql);
 };
 
-module.exports = { vote, countVotes };
+const countVotesQuery = (postId) => {
+  const sql = {
+    text: `SELECT SUM(vote) FROM votes WHERE post_id = $1;`,
+    values: [postId],
+  };
+  return connection.query(sql);
+};
+
+module.exports = { checkVoteQuery, voteQuery, countVotesQuery };
