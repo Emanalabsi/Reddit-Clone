@@ -1,3 +1,4 @@
+
 const allPostsDiv = document.querySelector(".posts");
 
 const renderPostCard = (data) => {
@@ -6,16 +7,23 @@ const renderPostCard = (data) => {
 
   const leftDiv = document.createElement("div");
   leftDiv.classList.add("left");
-
+  const hiddenInput = document.createElement("input");
+  hiddenInput.id = "post-id";
+  hiddenInput.setAttribute("type", "hidden");
+  hiddenInput.setAttribute("value", data.post_id);
   const upvoteButton = document.createElement("a");
   upvoteButton.setAttribute("id", "upvote-button");
 
   const votesNumber = document.createElement("span");
   votesNumber.classList.add("votes");
   votesNumber.setAttribute("id", "votes-number");
-
-  upvoteButton.addEventListener("click", () => {
-    addVote(data.post_id, 1, votesNumber);
+  
+  upvoteButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("jhjhhjhhjhjhs");
+    console.log(hiddenInput.value);
+    console.log(addVote);
+    addVote(hiddenInput.value ,1, votesNumber);
     // countVotes(data.post_id, votesNumber);
   });
 
@@ -23,24 +31,29 @@ const renderPostCard = (data) => {
   upvoteIcon.classList.add("fas", "fa-arrow-up");
 
   upvoteButton.appendChild(upvoteIcon);
+  upvoteButton.appendChild(hiddenInput);
   leftDiv.appendChild(upvoteButton);
 
-  countVotes(data.post_id, votesNumber);
+  countVotes(hiddenInput.value, votesNumber);
 
   leftDiv.appendChild(votesNumber);
 
   const downvoteButton = document.createElement("a");
   downvoteButton.setAttribute("id", "downvote-button");
-
-  downvoteButton.addEventListener("click", () => {
-    addVote(data.post_id, -1, votesNumber);
+  downvoteButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log(hiddenInput.value);
+    console.log("sjdjaasklklsaklasklklas");
+    console.log(addVote);
+    addVote(hiddenInput.value, -1, votesNumber);
   });
 
   const downvoteIcon = document.createElement("i");
   downvoteIcon.classList.add("fas", "fa-arrow-down");
-
+downvoteButton.appendChild(hiddenInput);
   downvoteButton.appendChild(downvoteIcon);
   leftDiv.appendChild(downvoteButton);
+  leftDiv.appendChild(hiddenInput);
 
   postDiv.appendChild(leftDiv);
 

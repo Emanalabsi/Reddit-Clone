@@ -6,6 +6,7 @@ const {
 const { CustomError } = require("../utils");
 
 const vote = (req, res, next) => {
+  console.log("SErver");
   const { postId, vote } = req.params;
   const { id } = req.user;
   checkVoteQuery(id, postId)
@@ -30,7 +31,7 @@ const countVotes = (req, res, next) => {
   const { postId } = req.params;
   countVotesQuery(postId)
     .then((data) => {
-      const voteCount = data.rows[0].upvotes - data.rows[0].downvotes;
+      const voteCount = data.rows[0].sum;
       res.json({
         error: false,
         data: { voteCount, ...data.rows },
