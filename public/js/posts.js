@@ -59,6 +59,10 @@ const renderPostCard = (data) => {
 
   const userDiv = document.createElement("div");
   userDiv.classList.add("user");
+
+  const names = document.createElement("div");
+  names.classList.add("names");
+
   userDiv.style.justifyContent = "space-between";
   userDiv.style.display = "flex";
 
@@ -147,12 +151,13 @@ const renderPostCard = (data) => {
   //aya
   const commentForm = document.createElement("div");
   commentForm.className = "comment-form";
+
   const containerForm = document.createElement("div");
   containerForm.className = "container-form";
 
   const commentTextArea = document.createElement("input");
   commentTextArea.setAttribute("type", "text");
-  // commentTextArea.className = "comment-text";
+
   commentTextArea.name = "content";
   commentTextArea.placeholder = "What are your thoughts?";
 
@@ -167,7 +172,6 @@ const renderPostCard = (data) => {
 
   postComments.appendChild(commentForm);
   postComments.appendChild(containerForm);
-  const commentsArray = data.comments;
 
   // postComments.appendChild(commentDiv);
   rightDiv.append(postComments);
@@ -195,6 +199,9 @@ const renderPostCard = (data) => {
           const user = document.createElement("p");
           user.textContent = post.username;
 
+          const names = document.createElement("div");
+          names.classList.add("names");
+
           const userName = document.createElement("div");
           userName.classList.add("user-name");
 
@@ -202,17 +209,18 @@ const renderPostCard = (data) => {
 
           const commenterImage = document.createElement("div");
           commenterImage.classList.add("user-image");
+          names.appendChild(commenterImage);
 
           const commentUser = document.createElement("div");
           commentUser.classList.add("comment-user");
           commentUser.appendChild(commenterImage);
-          commentUser.appendChild(userName);
+          commentUser.appendChild(names);
 
           const commentText = document.createElement("div");
           commentText.classList.add("comment-text");
 
           if (post.content != null) {
-            commentText.innerHTML = `<p>${post.content}</p>`;
+            commentText.innerHTML = <p>${post.content}</p>;
             commenterImage.innerHTML =
               '<img src="/images/comment-avatrar.png">';
           }
@@ -221,13 +229,12 @@ const renderPostCard = (data) => {
           commentDiv.classList.add("comment");
 
           commentDiv.appendChild(commentUser);
-          commentDiv.appendChild(commentText);
+          names.appendChild(commentText);
 
           containerForm.appendChild(commentDiv);
         })
       );
   });
-  console.log(data);
 
   data.comments.forEach((element) => {
     createComment(element, containerForm);
@@ -235,9 +242,11 @@ const renderPostCard = (data) => {
 };
 
 const createComment = (data, parent) => {
-  console.log(data);
   const user = document.createElement("p");
   user.textContent = data.username;
+
+  const names = document.createElement("div");
+  names.classList.add("names");
 
   const userName = document.createElement("div");
   userName.classList.add("user-name");
@@ -250,28 +259,28 @@ const createComment = (data, parent) => {
   const commentUser = document.createElement("div");
   commentUser.classList.add("comment-user");
   commentUser.appendChild(commenterImage);
-  commentUser.appendChild(userName);
+  commentUser.appendChild(names);
 
   const commentText = document.createElement("div");
   commentText.classList.add("comment-text");
 
   if (data.comment_content != null) {
-    commentText.innerHTML = `<p>${data.comment_content}</p>`;
+    commentText.innerHTML = <p>${data.comment_content}</p>;
     commenterImage.innerHTML = '<img src="/images/comment-avatrar.png">';
   }
 
+  names.appendChild(userName);
+  names.appendChild(commentText);
   const commentDiv = document.createElement("div");
   commentDiv.classList.add("comment");
 
   commentDiv.appendChild(commentUser);
-  commentDiv.appendChild(commentText);
 
   parent.appendChild(commentDiv);
 };
 
 const renderAllPosts = (posts) => {
   allPostsDiv.textContent = "";
-  console.log(posts);
   posts.message.forEach((post) => {
     return renderPostCard(post);
   });
