@@ -18,10 +18,7 @@ const voteQuery = (postId, userId, vote) => {
 
 const countVotesQuery = (postId) => {
   const sql = {
-    text: `SELECT COUNT(DISTINCT CASE WHEN votes.vote = 1 AND votes.post_id = 1 THEN votes.user_id END) AS upvotes,
-    COUNT(DISTINCT CASE WHEN votes.vote = -1 AND votes.post_id = 1 THEN votes.user_id END) AS downvotes
-    FROM votes 
-    WHERE votes.post_id = $1;`,
+    text: `SELECT SUM(vote) FROM votes WHERE post_id = $1;`,
     values: [postId],
   };
   return connection.query(sql);
