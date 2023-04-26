@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const router = require("./routes");
+const pagesRouter = require("./routes/pages");
 const { serverError, clientError } = require("../server/controllers/errors");
 
 const app = express();
@@ -16,9 +17,10 @@ app.use([
   cookieParser(),
 ]);
 
+app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(pagesRouter);
 app.use("/api/v1", router);
 app.use(serverError);
 app.use(clientError);
-app.use(express.static(path.join(__dirname, "..", "public")));
 
 module.exports = app;

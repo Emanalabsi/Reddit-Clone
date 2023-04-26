@@ -11,11 +11,11 @@ const getAllCommentsQuery = (postId) => {
   return connection.query(sql);
 };
 
-const addCommentQuery = (content, postId, userId) => {
+const addCommentQuery = (content, userId, postId) => {
   const sql = {
-    text: `INSERT INTO comments (content, post_id ,user_id)
+    text: `INSERT INTO comments (content, user_id ,post_id)
     VALUES ($1, $2, $3) RETURNING comments.id, comments.content, comments.user_id, comments.post_id,(SELECT username FROM users WHERE users.id = comments.user_id) AS username;`,
-    values: [content, postId, userId],
+    values: [content, userId, postId],
   };
   return connection.query(sql);
 };

@@ -2,7 +2,21 @@ const { connection } = require("../config");
 
 const getAllPostsQuery = () => {
   const sql = {
-    text: `SELECT p.id, p.title, p.description, p.media, u.username FROM posts p INNER JOIN users u on u.id = p.user_id;`,
+    text: `SELECT 
+    posts.id AS post_id, 
+    posts.title AS post_title, 
+    posts.description AS post_description,
+    posts.media AS post_media,
+    posts.created_at AS created_at,
+    json_agg(json_build_object('comment_id', comments.id, 'comment_content', comments.content, 'vote_value', votes.vote, 'username', users.username, 'commenter_name', comment_users.username, 'createdAt', comments.created_at, 'email', users.email)) AS comments 
+    FROM posts 
+    JOIN users ON posts.user_id = users.id 
+    LEFT JOIN comments ON posts.id = comments.post_id 
+    LEFT JOIN users AS comment_users ON comments.user_id = comment_users.id
+    LEFT JOIN votes ON posts.id = votes.post_id
+    GROUP BY posts.id, posts.title, posts.description, posts.media 
+    ORDER BY posts.id;
+    `,
   };
   return connection.query(sql);
 };
@@ -20,14 +34,6 @@ const deletePostQuery = (postId) => {
   const sql = {
     text: `DELETE FROM posts WHERE id = $1;`,
     values: [postId],
-  };
-  return connection.query(sql);
-};
-
-const getِUserPostsQuery = (userId) => {
-  const sql = {
-    text: `SELECT p.title, p.description, p.media, u.username FROM posts p INNER JOIN users u on u.id = p.user_id WHERE u.id = $1;`,
-    values: [userId],
   };
   return connection.query(sql);
 };
@@ -51,7 +57,6 @@ const updatePostQuery = (title, description, postId) => {
 module.exports = {
   addPostQuery,
   deletePostQuery,
-  getِUserPostsQuery,
   getAllPostsQuery,
   getPostByIdQuery,
   updatePostQuery,

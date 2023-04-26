@@ -67,8 +67,17 @@
         class="fas fa-search"
       />
       <div>
-        <button id="login-button">LOG IN</button>
-        <button id="signup-button">SIGN UP</button>
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fas fa-user" id="user-profile" style="color: #fff"></i>
+            <i class="fas fa-caret-down" id="caretDown" style="color: #fff"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="/api/v1/users/logout"
+              >Logout <i class="fas fa-sign-out-alt"></i
+            ></a>
+          </div>
+        </div>
       </div>
     </nav>
     <div id="wrapper">
@@ -105,6 +114,7 @@
       </section>
       <div id="popular-header">
         <h3>Popular posts</h3>
+        <button class="save-button" id="add-post">Create Post</button>
       </div>
       <div id="main-wrapper">
         <section class="modals">
@@ -160,7 +170,7 @@
                 <span class="close">&times;</span>
               </div>
               <div class="modal-body">
-                <form id="login">
+                <form action="" method="POST" id="login">
                   <label for="">Email</label>
                   <input
                     type="text"
@@ -168,7 +178,7 @@
                     id="login-username"
                     placeholder="email"
                   />
-                  <span class="error-msg">hello</span>
+
                   <label for="">Password</label>
                   <input
                     type="password"
@@ -176,7 +186,6 @@
                     id="login-password"
                     placeholder="password"
                   />
-                  <span class="error-msg">hello</span>
 
                   <div class="button-div">
                     <button
@@ -206,7 +215,7 @@
                     id="signup-username"
                     placeholder="username"
                   />
-                  <span class="error-msg">hello</span>
+
                   <label for="">Email</label>
                   <input
                     type="email"
@@ -214,7 +223,7 @@
                     id="signup-email"
                     placeholder="email"
                   />
-                  <span class="error-msg">hello</span>
+
                   <label for="">Password</label>
                   <input
                     type="password"
@@ -222,7 +231,6 @@
                     id="signup-password"
                     placeholder="password"
                   />
-                  <span class="error-msg">hello</span>
                   <div class="button-div">
                     <button
                       type="submit"
@@ -238,44 +246,7 @@
           </div>
         </section>
         <section class="posts-container">
-          <div class="posts">
-            <div class="post">
-              <div class="left">
-                <span
-                  ><a href="#"><i class="fas fa-arrow-up"></i></a
-                ></span>
-                <span class="votes">45.3k</span>
-                <span
-                  ><a href="#"><i class="fas fa-arrow-down"></i></a
-                ></span>
-              </div>
-              <div class="right">
-                <div class="user">
-                  <div class="user-image"><img src="/images/avatar.png" /></div>
-                  <div class="user-name">
-                    <p>eman</p>
-                    <span>3 hours ago</span>
-                  </div>
-                </div>
-                <div class="post-body">
-                  <p class="post-title">hellloo</p>
-                  <p class="post-description">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Ducimus fugit reiciendis aliquam dolor inventore nemo
-                    possimus, architecto sint eligendi culpa suscipit ipsum esse
-                    nam impedit minus cupiditate, veritatis aperiam sed.
-                  </p>
-                  <div class="post-image">
-                    <img src="/images/1.jpg" alt="" />
-                  </div>
-                </div>
-                <div class="post-comments">
-                  <a href="#"><i class="fas fa-comments"></i> 3 Comments</a>
-                </div>
-              </div>
-            </div>
-            -->
-          </div>
+          <div class="posts"></div>
         </section>
         <section id="aside">
           <div id="aside-header">
@@ -333,9 +304,8 @@
         </section>
       </div>
     </div>
-    <script src="./js/generic.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/posts.js"></script>
-    <script src="./js/users.js"></script>
+    <script src="../js/generic.js"></script>
+    <script src="../js/home.js"></script>
+    <script src="../js/posts.js"></script>
   </body>
 </html>
