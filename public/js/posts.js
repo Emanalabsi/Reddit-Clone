@@ -1,9 +1,5 @@
 const allPostsDiv = document.querySelector(".posts");
 
-const addComment = () => {
-  fetch("api/v1/comments");
-};
-
 const renderPostCard = (data) => {
   const postDiv = document.createElement("div");
   postDiv.classList.add("post");
@@ -12,8 +8,16 @@ const renderPostCard = (data) => {
   leftDiv.classList.add("left");
 
   const upvoteButton = document.createElement("a");
-  upvoteButton.setAttribute("href", "#");
   upvoteButton.setAttribute("id", "upvote-button");
+
+  const votesNumber = document.createElement("span");
+  votesNumber.classList.add("votes");
+  votesNumber.setAttribute("id", "votes-number");
+
+  upvoteButton.addEventListener("click", () => {
+    addVote(data.post_id, 1, votesNumber);
+    // countVotes(data.post_id, votesNumber);
+  });
 
   const upvoteIcon = document.createElement("i");
   upvoteIcon.classList.add("fas", "fa-arrow-up");
@@ -21,15 +25,16 @@ const renderPostCard = (data) => {
   upvoteButton.appendChild(upvoteIcon);
   leftDiv.appendChild(upvoteButton);
 
-  const votesNumber = document.createElement("span");
-  votesNumber.classList.add("votes");
-  votesNumber.setAttribute("id", "votes-number");
-  votesNumber.textContent = "45.3k";
+  countVotes(data.post_id, votesNumber);
+
   leftDiv.appendChild(votesNumber);
 
   const downvoteButton = document.createElement("a");
-  downvoteButton.setAttribute("href", "#");
   downvoteButton.setAttribute("id", "downvote-button");
+
+  downvoteButton.addEventListener("click", () => {
+    addVote(data.post_id, -1, votesNumber);
+  });
 
   const downvoteIcon = document.createElement("i");
   downvoteIcon.classList.add("fas", "fa-arrow-down");
@@ -54,7 +59,7 @@ const renderPostCard = (data) => {
   userImageDiv.classList.add("user-image");
 
   const userImage = document.createElement("img");
-  userImage.setAttribute("src", "../images/avatar.png");
+  userImage.setAttribute("src", "../images/user.jpg");
   userImageDiv.appendChild(userImage);
 
   userInfo.appendChild(userImageDiv);
@@ -70,16 +75,7 @@ const renderPostCard = (data) => {
   const postCreatedAt = document.createElement("span");
   postCreatedAt.setAttribute("id", "post-createdAt");
 
-  const userEmail = document.createElement("span");
-  userEmail.setAttribute("id", "user-email");
-  userEmail.textContent = data.comments[0].email;
-  // userEmail.addEventListener("click", (event) => {
-  //   fetch("/");
-  // });
-
   postCreatedAt.textContent = resetTime(data.created_at);
-
-  userNameDiv.appendChild(userEmail);
   userNameDiv.appendChild(postCreatedAt);
 
   userInfo.append(userNameDiv);
@@ -124,6 +120,8 @@ const renderPostCard = (data) => {
 
   const postComments = document.createElement("div");
   postComments.classList.add("post-comments");
+  //
+  // const commentDiv = createComment(data.data);
 
   const commentsLink = document.createElement("a");
   commentsLink.addEventListener("click", () => {
@@ -131,7 +129,6 @@ const renderPostCard = (data) => {
       ? console.log("no comments")
       : commentDiv.classList.toggle("comment-show");
   });
-
   const commentsIcon = document.createElement("i");
   commentsIcon.classList.add("fas", "fa-comments");
   commentsLink.appendChild(commentsIcon);
@@ -141,7 +138,6 @@ const renderPostCard = (data) => {
 
   postComments.appendChild(commentsLink);
 
-  //aya
   const commentForm = document.createElement("form");
   commentForm.className = "comment-form";
   const commentTextArea = document.createElement("input");
@@ -154,11 +150,10 @@ const renderPostCard = (data) => {
 
   const commentButton = document.createElement("button");
   commentButton.className = "comment-button";
-  commentButton.type = "submit";
   commentButton.textContent = "comment";
+
   commentButton.addEventListener("click", (event) => {
-    console.log(data.post_id);
-    console.log(commentTextArea.value);
+    const commentValue = { content: commentTextArea.value };
     event.preventDefault();
     fetch(`/api/v1/comments/${data.post_id}`, {
       method: "POST",
@@ -166,15 +161,14 @@ const renderPostCard = (data) => {
         "Content-Type": "application/json",
       },
       redirect: "follow",
-      body: JSON.stringify(commentTextArea.value),
+      body: JSON.stringify(commentValue),
     })
       .then((result) => result.json())
-      .then((data) => console.log(data));
+      .then((data) => createComment(data.data));
   });
   commentForm.appendChild(commentButton);
 
   postComments.appendChild(commentForm);
-  const commentsArray = data.comments;
 
   // postComments.appendChild(commentDiv);
   rightDiv.append(postComments);
@@ -184,9 +178,17 @@ const renderPostCard = (data) => {
   allPostsDiv.prepend(postDiv);
 };
 
+const renderAllPosts = (posts) => {
+  allPostsDiv.textContent = "";
+  console.log(posts);
+  posts.message.forEach((post) => {
+    return renderPostCard(post);
+  });
+};
+
 const createComment = (data) => {
   const user = document.createElement("p");
-  user.textContent = data.comments[0].commenter_name;
+  user.textContent = data.username;
 
   const userName = document.createElement("div");
   userName.classList.add("user-name");
@@ -198,15 +200,16 @@ const createComment = (data) => {
 
   const commentUser = document.createElement("div");
   commentUser.classList.add("comment-user");
+
   commentUser.appendChild(commenterImage);
   commentUser.appendChild(userName);
 
   const commentText = document.createElement("div");
   commentText.classList.add("comment-text");
 
-  if (data.comments[0].comment_content != null) {
-    commentText.innerHTML = `<p>${data.comments[0].comment_content}</p>`;
-    commenterImage.innerHTML = '<img src="/images/comment-avatrar.png">';
+  if (data.content != null) {
+    commentText.innerHTML = `<p>${data.content}</p>`;
+    commenterImage.innerHTML = '<img src="/images/user.jpg">';
   }
 
   const commentDiv = document.createElement("div");
@@ -218,12 +221,21 @@ const createComment = (data) => {
   return commentDiv;
 };
 
-const renderAllPosts = (posts) => {
-  allPostsDiv.textContent = "";
-  console.log(posts);
-  posts.message.forEach((post) => {
-    return renderPostCard(post);
-  });
+const addVote = (postId, vote, votesNumber) => {
+  return fetch(`/api/v1/votes/${postId}/${vote}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((result) => result.json())
+    .then((data) => countVotes(data.data[0].post_id, votesNumber));
+};
+
+const countVotes = (postId, votesNumber) => {
+  fetch(`/api/v1/votes/count/${postId}`)
+    .then((result) => result.json())
+    .then((data) => (votesNumber.textContent = data.data.voteCount));
 };
 
 addPostForm.addEventListener("submit", (event) => {
@@ -237,7 +249,8 @@ addPostForm.addEventListener("submit", (event) => {
     body: JSON.stringify(data),
   })
     .then((result) => result.json())
-    .then(console.log);
+    .catch((err) => console.log(err));
+  location.reload();
 });
 
 fetch("/api/v1/posts")

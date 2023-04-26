@@ -2,7 +2,7 @@ const signup = (userData) =>
   postRequest("/api/v1/users/signup", userData, "/home");
 
 const login = (userData) =>
-  postRequest("/api/v1/users/login", userData, "/home").then(console.log);
+  postRequest("/api/v1/users/login", userData, "/home");
 
 signupForm.addEventListener("submit", (event) => {
   event.preventDefault();

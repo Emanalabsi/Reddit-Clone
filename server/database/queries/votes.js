@@ -10,19 +10,21 @@ const checkVoteQuery = (userId, postId) => {
 
 const voteQuery = (postId, userId, vote) => {
   const sql = {
-    text: `INSERT INTO votes (post_id, user_id,vote) values ($1, $2 ,$3) ON CONFLICT (post_id, user_id) DO UPDATE SET vote = $3 RETURNING *`,
+    text: `INSERT INTO votes (post_id, user_id,vote) values ($1, $2 ,$3) ON CONFLICT (post_id, user_id) DO UPDATE SET vote = $3 RETURNING *;`,
     values: [postId, userId, vote],
   };
   return connection.query(sql);
 };
 
-const countVotes = () => {
+const countVotesQuery = (postId) => {
   const sql = {
-    text: `SELECT posts.title, SUM(CASE WHEN votes.vote = 1 THEN 1 ELSE 0 END) AS upvotes, SUM(CASE WHEN votes.vote = -1 THEN 1 ELSE 0 END) AS downvotes
-    FROM posts
-    LEFT JOIN votes ON posts.id = votes.post_id
-    GROUP BY posts.id;`,
+    text: `SELECT COUNT(DISTINCT CASE WHEN votes.vote = 1 AND votes.post_id = 1 THEN votes.user_id END) AS upvotes,
+    COUNT(DISTINCT CASE WHEN votes.vote = -1 AND votes.post_id = 1 THEN votes.user_id END) AS downvotes
+    FROM votes 
+    WHERE votes.post_id = $1;`,
+    values: [postId],
   };
   return connection.query(sql);
 };
-module.exports = { checkVoteQuery, voteQuery, countVotes };
+
+module.exports = { checkVoteQuery, voteQuery, countVotesQuery };
