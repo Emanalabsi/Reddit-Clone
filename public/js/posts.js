@@ -80,16 +80,7 @@ const renderPostCard = (data) => {
 
   userInfo.append(userNameDiv);
 
-  const deleteButtonDiv = document.createElement("div");
-  deleteButtonDiv.setAttribute("id", "delete-button-div");
-
-  const deleteButton = document.createElement("button");
-  deleteButton.setAttribute("id", "delete-button");
-  deleteButton.setAttribute("style", "display: none");
-  deleteButton.innerHTML = "Delete";
-  deleteButtonDiv.appendChild(deleteButton);
   userDiv.append(userInfo);
-  userDiv.append(deleteButtonDiv);
   rightDiv.append(userDiv);
 
   const postBodyDiv = document.createElement("div");
@@ -120,15 +111,15 @@ const renderPostCard = (data) => {
 
   const postComments = document.createElement("div");
   postComments.classList.add("post-comments");
-  //
-  // const commentDiv = createComment(data.data);
-
+  //comments
   const commentsLink = document.createElement("a");
+
   commentsLink.addEventListener("click", () => {
     data.comments.length === 0
       ? console.log("no comments")
       : commentDiv.classList.toggle("comment-show");
   });
+
   const commentsIcon = document.createElement("i");
   commentsIcon.classList.add("fas", "fa-comments");
   commentsLink.appendChild(commentsIcon);
@@ -137,12 +128,21 @@ const renderPostCard = (data) => {
   commentsLink.appendChild(commentsText);
 
   postComments.appendChild(commentsLink);
+  const commentDiv = document.createElement("div");
+  commentDiv.classList.add("comment");
 
-  const commentForm = document.createElement("form");
+  commentsLink.addEventListener("click", () => {
+    data.comments.length === 0
+      ? console.log("no comments")
+      : commentDiv.classList.toggle("comment-show");
+  });
+
+  //aya
+  const commentForm = document.createElement("div");
   commentForm.className = "comment-form";
   const commentTextArea = document.createElement("input");
   commentTextArea.setAttribute("type", "text");
-  // commentTextArea.className = "comment-text";
+
   commentTextArea.name = "content";
   commentTextArea.placeholder = "What are your thoughts?";
 
@@ -150,32 +150,68 @@ const renderPostCard = (data) => {
 
   const commentButton = document.createElement("button");
   commentButton.className = "comment-button";
+  commentButton.type = "submit";
   commentButton.textContent = "comment";
-
-  commentButton.addEventListener("click", (event) => {
-    const commentValue = { content: commentTextArea.value };
-    event.preventDefault();
-    fetch(`/api/v1/comments/${data.post_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(commentValue),
-    })
-      .then((result) => result.json())
-      .then((data) => createComment(data.data));
-  });
+  const postId = data.post_id;
   commentForm.appendChild(commentButton);
 
   postComments.appendChild(commentForm);
 
-  // postComments.appendChild(commentDiv);
+  postComments.appendChild(commentDiv);
   rightDiv.append(postComments);
 
   postDiv.append(leftDiv);
   postDiv.append(rightDiv);
   allPostsDiv.prepend(postDiv);
+
+  commentButton.addEventListener("click", (event) => {
+    const data = {
+      content: commentTextArea.value,
+    };
+
+    fetch(`/api/v1/comments/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      body: JSON.stringify(data),
+    })
+      .then((result) => result.json())
+      .then((data) =>
+        data.data.forEach((post) => {
+          console.log(post.username, post.content);
+          const user = document.createElement("p");
+          user.textContent = post.username;
+
+          const userName = document.createElement("div");
+          userName.classList.add("user-name");
+
+          userName.appendChild(user);
+
+          const commenterImage = document.createElement("div");
+          commenterImage.classList.add("user-image");
+
+          const commentUser = document.createElement("div");
+          commentUser.classList.add("comment-user");
+          commentUser.appendChild(commenterImage);
+          commentUser.appendChild(userName);
+
+          const commentText = document.createElement("div");
+          commentText.classList.add("comment-text");
+
+          if (post.content != null) {
+            commentText.innerHTML = `<p>${post.content}</p>`;
+            commenterImage.innerHTML = '<img src="/images/user.jpg">';
+          }
+
+          commentDiv.appendChild(commentUser);
+          commentDiv.appendChild(commentText);
+
+          rightDiv.appendChild(commentDiv);
+        })
+      );
+  });
 };
 
 const renderAllPosts = (posts) => {
@@ -184,41 +220,6 @@ const renderAllPosts = (posts) => {
   posts.message.forEach((post) => {
     return renderPostCard(post);
   });
-};
-
-const createComment = (data) => {
-  const user = document.createElement("p");
-  user.textContent = data.username;
-
-  const userName = document.createElement("div");
-  userName.classList.add("user-name");
-
-  userName.appendChild(user);
-
-  const commenterImage = document.createElement("div");
-  commenterImage.classList.add("user-image");
-
-  const commentUser = document.createElement("div");
-  commentUser.classList.add("comment-user");
-
-  commentUser.appendChild(commenterImage);
-  commentUser.appendChild(userName);
-
-  const commentText = document.createElement("div");
-  commentText.classList.add("comment-text");
-
-  if (data.content != null) {
-    commentText.innerHTML = `<p>${data.content}</p>`;
-    commenterImage.innerHTML = '<img src="/images/user.jpg">';
-  }
-
-  const commentDiv = document.createElement("div");
-  commentDiv.classList.add("comment");
-
-  commentDiv.appendChild(commentUser);
-  commentDiv.appendChild(commentText);
-
-  return commentDiv;
 };
 
 const addVote = (postId, vote, votesNumber) => {
