@@ -342,6 +342,10 @@
      color: white;
  }
 
+ #downvote-button, #upvote-button {
+     background-color: transparent;
+ }
+
  #downvote-button i, #upvote-button i {
      color: white;
      cursor: pointer;
