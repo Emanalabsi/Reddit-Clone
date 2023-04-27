@@ -59,10 +59,6 @@ const renderPostCard = (data) => {
 
   const userDiv = document.createElement("div");
   userDiv.classList.add("user");
-
-  const names = document.createElement("div");
-  names.classList.add("names");
-
   userDiv.style.justifyContent = "space-between";
   userDiv.style.display = "flex";
 
@@ -151,13 +147,12 @@ const renderPostCard = (data) => {
   //aya
   const commentForm = document.createElement("div");
   commentForm.className = "comment-form";
-
   const containerForm = document.createElement("div");
   containerForm.className = "container-form";
 
   const commentTextArea = document.createElement("input");
   commentTextArea.setAttribute("type", "text");
-
+  // commentTextArea.className = "comment-text";
   commentTextArea.name = "content";
   commentTextArea.placeholder = "What are your thoughts?";
 
@@ -172,6 +167,7 @@ const renderPostCard = (data) => {
 
   postComments.appendChild(commentForm);
   postComments.appendChild(containerForm);
+  const commentsArray = data.comments;
 
   // postComments.appendChild(commentDiv);
   rightDiv.append(postComments);
@@ -195,7 +191,6 @@ const renderPostCard = (data) => {
       .then((result) => result.json())
       .then((data) =>
         data.data.forEach((post) => {
-          console.log(post.username, post.content);
           const user = document.createElement("p");
           user.textContent = post.username;
 
@@ -209,7 +204,7 @@ const renderPostCard = (data) => {
 
           const commenterImage = document.createElement("div");
           commenterImage.classList.add("user-image");
-          names.appendChild(commenterImage);
+          names.appendChild(userName);
 
           const commentUser = document.createElement("div");
           commentUser.classList.add("comment-user");
@@ -220,7 +215,7 @@ const renderPostCard = (data) => {
           commentText.classList.add("comment-text");
 
           if (post.content != null) {
-            commentText.innerHTML = <p>${post.content}</p>;
+            commentText.innerHTML = `<p>${post.content}</p>`;
             commenterImage.innerHTML =
               '<img src="/images/comment-avatrar.png">';
           }
@@ -243,7 +238,9 @@ const renderPostCard = (data) => {
 
 const createComment = (data, parent) => {
   const user = document.createElement("p");
-  user.textContent = data.username;
+  if (data.comment_content) {
+    user.textContent = data.username;
+  }
 
   const names = document.createElement("div");
   names.classList.add("names");
@@ -265,7 +262,7 @@ const createComment = (data, parent) => {
   commentText.classList.add("comment-text");
 
   if (data.comment_content != null) {
-    commentText.innerHTML = <p>${data.comment_content}</p>;
+    commentText.innerHTML = `<p>${data.comment_content}</p>`;
     commenterImage.innerHTML = '<img src="/images/comment-avatrar.png">';
   }
 
@@ -312,9 +309,7 @@ addPostForm.addEventListener("submit", (event) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
-    .then((result) => result.json())
-    .then(console.log);
+  }).then((result) => result.json());
   location.reload();
 });
 
