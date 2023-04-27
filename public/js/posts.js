@@ -239,7 +239,7 @@ const renderPostCard = (data) => {
 const createComment = (data, parent) => {
   const user = document.createElement("p");
   if (data.comment_content) {
-    user.textContent = data.username;
+    user.textContent = data.commenter_name;
   }
 
   const names = document.createElement("div");
