@@ -37,6 +37,8 @@ const renderPostCard = (data) => {
   votesNumber.setAttribute("id", "votes-number");
   leftDiv.appendChild(votesNumber);
 
+  countVotes(data.post_id, votesNumber);
+
   const downvoteButton = document.createElement("a");
   downvoteButton.setAttribute("href", "#");
   downvoteButton.setAttribute("id", "downvote-button");
@@ -144,7 +146,6 @@ const renderPostCard = (data) => {
 
   postComments.appendChild(commentsLink);
 
-  //aya
   const commentForm = document.createElement("div");
   commentForm.className = "comment-form";
   const containerForm = document.createElement("div");
@@ -152,7 +153,6 @@ const renderPostCard = (data) => {
 
   const commentTextArea = document.createElement("input");
   commentTextArea.setAttribute("type", "text");
-  // commentTextArea.className = "comment-text";
   commentTextArea.name = "content";
   commentTextArea.placeholder = "What are your thoughts?";
 
@@ -169,7 +169,6 @@ const renderPostCard = (data) => {
   postComments.appendChild(containerForm);
   const commentsArray = data.comments;
 
-  // postComments.appendChild(commentDiv);
   rightDiv.append(postComments);
 
   postDiv.append(leftDiv);
@@ -297,7 +296,7 @@ const addVote = (postId, vote, votesNumber) => {
 const countVotes = (postId, votesNumber) => {
   fetch(`/api/v1/votes/count/${postId}`)
     .then((result) => result.json())
-    .then((data) => (votesNumber.textContent = data.data.voteCount));
+    .then((data) => (votesNumber.textContent = data.data[0].sum));
 };
 
 addPostForm.addEventListener("submit", (event) => {
